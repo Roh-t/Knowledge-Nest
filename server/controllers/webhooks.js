@@ -12,7 +12,7 @@ export const clerkWebhooks = async (req, res) => {
       "svix-signature": req.headers["svix-signature"],
     };
 
-    const evt = wh.verify(payload, headers);
+    const evt = wh.verify(payload, headers); // Svix will parse JSON itself
     const { data, type } = evt;
 
     console.log("📨 Clerk Webhook Type:", type);
@@ -43,11 +43,11 @@ export const clerkWebhooks = async (req, res) => {
         return res.status(200).json({ success: true });
 
       default:
-        console.warn("Unhandled webhook type:", type);
+        console.warn("⚠️ Unhandled webhook type:", type);
         return res.status(400).json({ success: false });
     }
   } catch (err) {
     console.error("❌ Webhook Error:", err.message);
-    res.status(500).json({ success: false, message: err.message });
+    return res.status(500).json({ success: false, message: err.message });
   }
 };
