@@ -14,7 +14,7 @@ app.use(cors());
 
 // 🛑 Parse JSON only for non-webhook routes
 // 🟢 Clerk requires raw body for webhook validation
-app.post('/clerk', express.raw({ type: 'application/json' }), clerkWebhooks);
+app.post('/', express.raw({ type: 'application/json' }), clerkWebhooks);
 
 // All other routes use express.json()
 app.use(express.json());
