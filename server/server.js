@@ -12,10 +12,13 @@ await connectDB()
 
 // Middlewares
 app.use(cors())
+// Apply JSON parser middleware to all routes
+app.use(express.json());
+
 
 //Routes
 app.get('/',(req,res)=> res.send("API Working"))
-app.post('/clerk', express.json(), clerkWebhooks)
+app.post('/clerk',clerkWebhooks)
 
 
 //Port
