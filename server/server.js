@@ -16,6 +16,7 @@ const app = express()
 app.use(cors())
 app.use(clerkMiddleware())
 // Apply JSON parser middleware to all routes
+app.post('/stripe',express.raw({type: 'application/json'}),stripeWebhooks)
 app.use(express.json());
 
 // Connect to database
@@ -29,7 +30,7 @@ app.post('/',clerkWebhooks)
 app.use('/api/educator',educatorRouter)
 app.use('/api/course',courseRouter)
 app.use('/api/user',userRouter)
-app.post('/stripe',express.raw({type: 'application/json'}),stripeWebhooks)
+
 //Port
 const PORT = process.env.PORT || 5000
 
