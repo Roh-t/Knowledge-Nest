@@ -99,7 +99,7 @@ export const stripeWebhooks = async (request, response) => {
         }
 
 
-        case 'payment_intent.payment_failed':
+        case 'payment_intent.payment_failed':{
             const paymentIntent = event.data.object;
             const paymentIntentId = paymentIntent.id;
 
@@ -108,11 +108,13 @@ export const stripeWebhooks = async (request, response) => {
             })
 
             const { purchaseId } = session.data[0].metadata;
+
             const purchaseData = await Purchase.findById(purchaseId)
             purchaseData.status = 'failed'
             await purchaseData.save()
 
             break;
+        }
         // ... handle other event types
         default:
             console.log(`Unhandled event type ${event.type}`);
