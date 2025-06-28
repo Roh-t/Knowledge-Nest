@@ -4,6 +4,7 @@ import { useClerk, UserButton, useUser } from '@clerk/clerk-react'
 import { useContext } from 'react'
 import { AppContext } from '../../context/AppContext'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 
 const Navbar = () => {
 
