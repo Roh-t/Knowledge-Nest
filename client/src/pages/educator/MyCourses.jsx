@@ -1,20 +1,31 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
 import Loading from '../../components/student/Loading'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const MyCourses = () => {
 
-  const {currency, allCourses} = useContext(AppContext)
+  const {currency, backendUrl, isEducator, getToken} = useContext(AppContext)
 
   const [courses,setCourses] = useState(null)
 
   const fetchEducatorCourses = async ()=>{
-    setCourses(allCourses)
+    try {
+      const token = await getToken()
+      const { data } = await axios.get(backendUrl +'/api/educator/courses',{headers: {Authorization:`Bearer ${token}`}})
+
+      data.success && setCourses(data.courses)
+    } catch (error) {
+      toast.error(error.message)
+    }
   }
 
   useEffect(()=>{
-    fetchEducatorCourses()
-  },[])
+    if(isEducator){
+      fetchEducatorCourses()
+    }
+  },[isEducator])
 
 
   return courses ? (
@@ -36,7 +47,8 @@ const MyCourses = () => {
               {courses.map((course)=>(
                 <tr key={course._id} className='border-b border-gray-500/20'>
                   <td className='md:px-4 pl-2 md:pl-4 py-3 flex items-center space-x-3 truncate'>
-                    <img src={course.courseThumbnail} alt="Course Image" className='w-16'/>
+                    {/* <img src={course.courseThumbnail} alt="Course Image" className='w-16'/> */}
+                    <img className='w-16' src={course.courseThumbnail || course.coursethumbnail} alt="Course Image" />
                     <span className='truncate hidden md:block'>{course.courseTitle}</span>
                   </td>
                   <td className='px-4 py-3'>{currency} {Math.floor(course.enrolledStudents.length * (course.coursePrice - course.discount * course.coursePrice /100))}</td>

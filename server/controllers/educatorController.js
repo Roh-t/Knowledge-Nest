@@ -2,7 +2,7 @@ import { clerkClient } from '@clerk/express'
 import Course from '../models/Course.js'
 import {v2 as cloudinary} from "cloudinary"
 import { Purchase } from '../models/Purchase.js'
-
+import User from '../models/User.js'
 
 // update role to educator 
 export const updateRoleToEducator = async (req,res)=>{
@@ -77,7 +77,7 @@ export const educatorDashboardData = async (req,res)=>{
             status: 'completed'
         });
 
-        const totalEarnings = purchases.reduce((sum, puchase)=> sum + Purchase.amount , 0)
+        const totalEarnings = purchases.reduce((sum, purchase)=> sum + purchase.amount , 0)
 
         // Collect unique enrolled students IDa with their course titles
         const enrolledStudentsData = [];
@@ -88,7 +88,7 @@ export const educatorDashboardData = async (req,res)=>{
             
             students.forEach(student => {
                 enrolledStudentsData.push({
-                    courseTitle: courseTitle,
+                    courseTitle: course.courseTitle,
                     student
                 })
             })
