@@ -37,21 +37,21 @@ const Navbar = () => {
   }
 
   return (
-    <div className={`flex items-center justify-between px-4 sm:px-10 md:px-14 lg:px-36 border-b border-gray-500 py-4  ${isCourseListPage ? 'bg-white':'bg-cyan-100/70'}`}>
-      <img onClick={()=> navigate('/')} src={assets.logo} alt="Logo" className='w-28 lg:w-32 cursor-pointer' />
+    <div className={`flex items-center justify-between px-4 sm:px-10 md:px-14 lg:px-36 border-b border-gray-500 py-4  ${isCourseListPage ? 'bg-white':'bg-yellow-100/70'}`}>
+      <img onClick={()=> navigate('/')} src={assets.logo} alt="Logo" className='w-14 h-14 lg:w-14 lg:h-14 cursor-pointer' />
       <div className="hidden md:flex items-center gap-5 text-gray-500">
             <div className='flex items-center gap-5'>
               {
                 user &&
                 <>
-                <button onClick={becomeEducator}>{isEducator ? "Educator Dashboard" : "Become Educator"}</button>|
-                <Link to='/my-enrollments'>My Enrollments</Link>
+                <button className='text-xl' onClick={becomeEducator}>{isEducator ? "Educator Dashboard" : "Become Educator"}</button>|
+                <Link className='text-xl' to='/my-enrollments'>My Enrollments</Link>
                 </>
               }
             </div>
             {
               user ? <UserButton/> :
-              <button onClick={()=> openSignIn()} className='bg-blue-600 text-white px-5 py-2 rounded-full'>Create Account</button>
+              <button onClick={()=> openSignIn()} className='bg-blue-600 text-white text-xl px-5 py-2 rounded-full'>Create Account</button>
             }
       </div>
 
